@@ -1,0 +1,32 @@
+model: BasicSeq2Seq
+model_dir: BasicSeq2Seq_tune_model_data
+data_directories: data/datasets/data_final_processed/
+model_params:
+  embedding.file: data/glove/glove.6B.100d.txt
+  embedding.tune: True
+  embedding.dim: 100
+  encoder.class: seq2seq.encoders.BidirectionalRNNEncoder
+  encoder.params:
+    rnn_cell:
+      cell_class: LSTMCell
+      cell_params:
+        num_units: 150
+      dropout_input_keep_prob: 0.5
+      dropout_output_keep_prob: 0.5
+      num_layers: 1
+  decoder.class: seq2seq.decoders.BasicDecoder
+  decoder.params:
+    rnn_cell:
+      cell_class: LSTMCell
+      cell_params:
+        num_units: 150
+      dropout_input_keep_prob: 0.5
+      dropout_output_keep_prob: 0.5
+      num_layers: 1
+  optimizer.name: Adam
+  optimizer.params:
+    epsilon: 0.0000008
+  optimizer.learning_rate: 0.0005
+  source.max_seq_len: 45
+  source.reverse: false
+  target.max_seq_len: 125

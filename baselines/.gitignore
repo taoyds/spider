@@ -1,0 +1,15 @@
+*.pyc
+*.txt
+*.swp
+
+seq2seq_attention_copy/evaluation.py
+seq2seq_attention_copy/old_readme.md
+seq2seq_attention_copy/process.py
+seq2seq_attention_copy/quick_eval.py
+seq2seq_attention_copy/test_evaluate/
+seq2seq_attention_copy/old/
+
+
+nl2sql/data/word2vec
+nl2code/glove
+nl2code/data

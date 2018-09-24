@@ -1,0 +1,32 @@
+{
+  "name": "nl2code",
+  "version": "1.0.0",
+  "description": "A syntactic neural model for parsing natural language to executable code [paper](https://arxiv.org/abs/1704.01696).",
+  "main": "index.js",
+  "scripts": {
+    "sqlgenerate": "babel ./lang/sql/sqlgenerate.js --out-file ./lang/sql/sqlgenerate-babel.js",
+    "ast":"babel ./lang/sql/ast_to_sql.js --out-file ./lang/sql/ast_to_sql-babel.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcyin/NL2code.git"
+  },
+  "author": "Kai Yang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pcyin/NL2code/issues"
+  },
+  "homepage": "https://github.com/pcyin/NL2code#readme",
+  "dependencies": {
+    "sqlgenerate": "^1.2.1",
+    "sqlite-parser": "^1.0.1",
+    "webpack": "^4.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack-cli": "^2.0.14"
+  }
+}

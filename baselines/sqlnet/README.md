@@ -1,7 +1,7 @@
 
 ## Modified SQLNet Baseline for the Spider Text-to-SQL Task
 
-Source code of modified SQLNet model reported on our EMNLP 2018 paper:[Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task ](https://arxiv.org/abs/1804.09769) to be updated.
+Source code of modified SQLNet model reported on our EMNLP 2018 paper:[Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task ](https://arxiv.org/abs/1809.08887) to be updated.
 
 
 #### Environment Setup
@@ -11,7 +11,7 @@ Source code of modified SQLNet model reported on our EMNLP 2018 paper:[Spider: A
 
 
 #### Download Data and Embeddings
-1. download the dataset from [the Spider task website](https://arxiv.org/abs/1804.09769) to be updated, and put `tables.json`, `train.json`, and `dev.json` under `data/` directory.
+1. download the dataset from [the Spider task website](https://yale-lily.github.io/spider) to be updated, and put `tables.json`, `train.json`, and `dev.json` under `data/` directory.
 2. Download the pretrained [Glove](https://nlp.stanford.edu/data/wordvecs/glove.42B.300d.zip)
 
 

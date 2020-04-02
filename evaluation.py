@@ -546,7 +546,8 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
         if etype in ["all", "exec"]:
             exec_score = eval_exec_match(db, p_str, g_str, p_sql, g_sql)
             if exec_score:
-                scores[hardness]['exec'] += 1
+                scores[hardness]['exec'] += 1.0
+                scores['all']['exec'] += 1.0
 
         if etype in ["all", "match"]:
             exact_score = evaluator.eval_exact_match(p_sql, g_sql)

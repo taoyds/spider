@@ -64,7 +64,7 @@ class Schema:
     def _map(self, schema):
         idMap = {'*': "__all__"}
         id = 1
-        for key, vals in schema.iteritems():
+        for key, vals in schema.items():
             for val in vals:
                 idMap[key.lower() + "." + val.lower()] = "__" + key.lower() + "." + val.lower() + "__"
                 id += 1

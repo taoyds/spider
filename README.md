@@ -25,7 +25,7 @@ The dataset is annotated by 11 college students. When you use the Spider dataset
 
 ### Installation
 
-`evaluation.py` and `process_sql.py` are written in Python 2.7. Enviroment setup for each baseline is in README under each baseline directory.
+`evaluation.py` and `process_sql.py` are written in Python 3. Enviroment setup for each baseline is in README under each baseline directory.
 
 
 ### Data Content and Format

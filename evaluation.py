@@ -386,7 +386,12 @@ class Evaluator:
         if len(label['from']['table_units']) > 0:
             label_tables = sorted(label['from']['table_units'])
             pred_tables = sorted(pred['from']['table_units'])
-            return label_tables == pred_tables
+            label_cond = sorted([label['from']['conds'][0][2][1], label['from']['conds'][0][3]])
+            pred_cond = []
+            if len(pred['from']['conds']) > 0:
+                pred_cond = sorted([pred['from']['conds'][0][2][1], pred['from']['conds'][0][3]])
+                
+            return (label_tables == pred_tables) and (label_cond == pred_cond)
         return 1
 
     def eval_partial_match(self, pred, label):

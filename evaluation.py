@@ -386,10 +386,12 @@ class Evaluator:
         if len(label['from']['table_units']) > 0:
             label_tables = sorted(label['from']['table_units'])
             pred_tables = sorted(pred['from']['table_units'])
-            label_cond = sorted([label['from']['conds'][0][2][1], label['from']['conds'][0][3]])
             pred_cond = []
-            if len(pred['from']['conds']) > 0:
-                pred_cond = sorted([pred['from']['conds'][0][2][1], pred['from']['conds'][0][3]])
+            label_cond = []
+            if len(label['from']['table_units']) > 1:
+                label_cond = sorted([label['from']['conds'][0][2][1], label['from']['conds'][0][3]])
+                if len(pred['from']['conds']) > 0:
+                    pred_cond = sorted([pred['from']['conds'][0][2][1], pred['from']['conds'][0][3]])
                 
             return (label_tables == pred_tables) and (label_cond == pred_cond)
         return 1

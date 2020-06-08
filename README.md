@@ -5,6 +5,8 @@ Spider is a large human-labeled dataset for complex and cross-domain semantic pa
 
 ### Changelog
 
+- `06/07/2020` We corrected some annotation errors and label mismatches (not errors) in Spider dev and test sets (~4% of dev examples updated, click [here](https://github.com/taoyds/spider/commit/25fcd85d9b6e94acaeb5e9172deadeefeed83f5e#diff-18b0a730a7b0d29b0a78a5070d971d49) for more details). Please download the Spider dataset from [the page](https://yale-lily.github.io/spider) again.
+- `01/16/2020` For value prediction (in order to compute the execution accuracy), your model should be able to 1) copy from the question inputs, 2) retrieve from the database content (database content is available), or 3) generate numbers (e.g. 3 in "LIMIT 3").
 - `1/14/2019` The submission toturial is ready! Please follow it to get your results on the unreleased test data.
 - `12/17/2018` We updated 7 sqlite database files. Please download the Spider data from the official website again. Please refer to [the issue 14](https://github.com/taoyds/spider/issues/14) for more details.
 - `10/25/2018`: evaluation script is updated so that the table in `count(*)`cases will be evaluated as well. Please check out [the issue 5](https://github.com/taoyds/spider/issues/5) for more info. Results of all baselines and [syntaxSQL](https://github.com/taoyds/syntaxSQL) on the papers are updated as well.

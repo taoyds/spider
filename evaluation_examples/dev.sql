@@ -46,10 +46,10 @@ SQL:  select location ,  name from stadium where capacity between 5000 and 10000
 Question 16:  What are the locations and names of all stations with capacity between 5000 and 10000 ? ||| concert_singer
 SQL:  select location ,  name from stadium where capacity between 5000 and 10000
 
-Question 17:  What is the average and the maximum capacity of all stadiums ? ||| concert_singer
-SQL:  select avg(capacity) ,  max(capacity) from stadium
+Question 17:  What is the maximum capacity and the average of all stadiums ? ||| concert_singer
+SQL:  select max(capacity), average from stadium
 
-Question 18:  What is the average and maximum capacities for all stations ? ||| concert_singer
+Question 18:  What is the average and maximum capacities for all stadiums ? ||| concert_singer
 SQL:  select avg(capacity) ,  max(capacity) from stadium
 
 Question 19:  What is the name and capacity for the stadium with highest average attendance ? ||| concert_singer
@@ -74,7 +74,7 @@ Question 25:  Show the stadium name and capacity with most number of concerts in
 SQL:  select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >=  2014 group by t2.stadium_id order by count(*) desc limit 1
 
 Question 26:  What is the name and capacity of the stadium with the most concerts after 2013 ? ||| concert_singer
-SQL:  select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >=  2014 group by t2.stadium_id order by count(*) desc limit 1
+SQL:  select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1
 
 Question 27:  Which year has most number of concerts ? ||| concert_singer
 SQL:  select year from concert group by year order by count(*) desc limit 1
@@ -100,7 +100,7 @@ SQL:  select name from stadium except select t2.name from concert as t1 join sta
 Question 34:  Show the name and theme for all concerts and the number of singers in each concert . ||| concert_singer
 SQL:  select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id
 
-Question 35:  What are the names , themes , and number of singers for each and every concert ? ||| concert_singer
+Question 35:  What are the names , themes , and number of singers for every concert ? ||| concert_singer
 SQL:  select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id
 
 Question 36:  List singer names and number of concerts for each singer . ||| concert_singer
@@ -128,10 +128,10 @@ Question 43:  What are the names and locations of the stadiums that had concerts
 SQL:  select t2.name ,  t2.location from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  =  2014 intersect select t2.name ,  t2.location from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  =  2015
 
 Question 44:  Find the number of concerts happened in the stadium with the highest capacity . ||| concert_singer
-SQL:  select count(*) from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id order by t2.capacity desc limit 1
+SQL:  select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
 
 Question 45:  What are the number of concerts that occurred in the stadium with the largest capacity ? ||| concert_singer
-SQL:  select count(*) from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id order by t2.capacity desc limit 1
+SQL:  select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
 
 Question 46:  Find the number of pets whose weight is heavier than 10 . ||| pets_1
 SQL:  select count(*) from pets where weight  >  10
@@ -175,7 +175,7 @@ SQL:  select distinct t1.fname from student as t1 join has_pet as t2 on t1.stuid
 Question 59:  What are the first names of every student who has a cat or dog as a pet ? ||| pets_1
 SQL:  select distinct t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' or t3.pettype  =  'dog'
 
-Question 60:  Find the name of students who have both cat and dog pets . ||| pets_1
+Question 60:  Find the first name of students who have both cat and dog pets . ||| pets_1
 SQL:  select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog'
 
 Question 61:  What are the students ' first names who have both cats and dogs as pets ? ||| pets_1
@@ -238,7 +238,7 @@ SQL:  select t2.petid from student as t1 join has_pet as t2 on t1.stuid  =  t2.s
 Question 80:  Find the number of pets for each student who has any pet and student id . ||| pets_1
 SQL:  select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid
 
-Question 81:  For students who have pets , how many pets does each student have ? ||| pets_1
+Question 81:  For students who have pets , how many pets does each student have ? list their ids instead of names . ||| pets_1
 SQL:  select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid
 
 Question 82:  Find the first name and gender of student who have more than one pet . ||| pets_1
@@ -254,10 +254,10 @@ Question 85:  What is the last name of the student who has a cat that is 3 years
 SQL:  select t1.lname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pet_age  =  3 and t3.pettype  =  'cat'
 
 Question 86:  Find the average age of students who do not have any pet . ||| pets_1
-SQL:  select avg(age) from student where stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid)
+SQL:  select avg(age) from student where stuid not in (select stuid from has_pet)
 
 Question 87:  What is the average age for all students who do not own any pets ? ||| pets_1
-SQL:  select avg(age) from student where stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid)
+SQL:  select avg(age) from student where stuid not in (select stuid from has_pet)
 
 Question 88:  How many continents are there ? ||| car_1
 SQL:  select count(*) from continents;
@@ -325,8 +325,8 @@ SQL:  select t2.countryname from car_makers as t1 join countries as t2 on t1.cou
 Question 109:  What is the name of the country with the most car makers ? ||| car_1
 SQL:  select t2.countryname from car_makers as t1 join countries as t2 on t1.country  =  t2.countryid group by t1.country order by count(*) desc limit 1;
 
-Question 110:  How many car models are produced by each maker ? List the count and the maker full name . ||| car_1
-SQL:  select count(*) ,  t2.fullname ,  t2.id from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;
+Question 110:  How many car models are produced by each maker ? Only list the count and the maker full name . ||| car_1
+SQL:  select count(*) ,  t2.fullname from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;
 
 Question 111:  What is the number of car models that are produced by each maker and what is the id and full name of each maker ? ||| car_1
 SQL:  select count(*) ,  t2.fullname ,  t2.id from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;
@@ -356,10 +356,10 @@ Question 119:  What is the average miles per gallon of all the cards with 4 cyli
 SQL:  select avg(mpg) from cars_data where cylinders  =  4;
 
 Question 120:  What is the smallest weight of the car produced with 8 cylinders on 1974 ? ||| car_1
-SQL:  select weight from cars_data where cylinders  =  4 and year  =  1974 order by weight asc limit 1;
+SQL:  select min(weight) from cars_data where cylinders  =  8 and year  =  1974
 
-Question 121:  What is the minimu weight of the car with 8 cylinders produced in 1974 ? ||| car_1
-SQL:  select weight from cars_data where cylinders  =  4 and year  =  1974 order by weight asc limit 1;
+Question 121:  What is the minimum weight of the car with 8 cylinders produced in 1974 ? ||| car_1
+SQL:  select min(weight) from cars_data where cylinders  =  8 and year  =  1974
 
 Question 122:  What are all the makers and models ? ||| car_1
 SQL:  select maker ,  model from model_list;
@@ -400,13 +400,13 @@ SQL:  select t2.horsepower ,  t1.make from car_names as t1 join cars_data as t2 
 Question 134:  Which model saves the most gasoline ? That is to say , have the maximum miles per gallon . ||| car_1
 SQL:  select t1.model from car_names as t1 join cars_data as t2 on t1.makeid  =  t2.id order by t2.mpg desc limit 1;
 
-Question 135:  What is the car wmodel with the highest mpg ? ||| car_1
+Question 135:  What is the car model with the highest mpg ? ||| car_1
 SQL:  select t1.model from car_names as t1 join cars_data as t2 on t1.makeid  =  t2.id order by t2.mpg desc limit 1;
 
 Question 136:  What is the average horsepower of the cars before 1980 ? ||| car_1
 SQL:  select avg(horsepower) from cars_data where year  <  1980;
 
-Question 137:  What is the average horsepower for all cards produced before 1980 ? ||| car_1
+Question 137:  What is the average horsepower for all cars produced before 1980 ? ||| car_1
 SQL:  select avg(horsepower) from cars_data where year  <  1980;
 
 Question 138:  What is the average edispl of the cars of model volvo ? ||| car_1
@@ -458,10 +458,10 @@ Question 153:  What are the different models created by either the car maker Gen
 SQL:  select distinct t2.model from car_names as t1 join model_list as t2 on t1.model  =  t2.model join car_makers as t3 on t2.maker  =  t3.id join cars_data as t4 on t1.makeid  =  t4.id where t3.fullname  =  'general motors' or t4.weight  >  3500;
 
 Question 154:  In which years cars were produced weighing no less than 3000 and no more than 4000 ? ||| car_1
-SQL:  select distinct t1.year from cars_data as t1 where t1.weight  >  3000 and t1.weight  <  4000;
+SQL:  select distinct year from cars_data where weight between 3000 and 4000;
 
 Question 155:  What are the different years in which there were cars produced that weighed less than 4000 and also cars that weighted more than 3000 ? ||| car_1
-SQL:  select distinct t1.year from cars_data as t1 where t1.weight  >  3000 and t1.weight  <  4000;
+SQL:  select distinct year from cars_data where weight between 3000 and 4000;
 
 Question 156:  What is the horsepower of the car with the largest accelerate ? ||| car_1
 SQL:  select t1.horsepower from cars_data as t1 order by t1.accelerate desc limit 1;
@@ -482,10 +482,10 @@ Question 161:  What is the number of cars with a greater accelerate than the one
 SQL:  select count(*) from cars_data where accelerate  >  ( select accelerate from cars_data order by horsepower desc limit 1 );
 
 Question 162:  How many countries has more than 2 car makers ? ||| car_1
-SQL:  select count(*) from ( select t1.countryid ,  count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2 );
+SQL:  select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2
 
 Question 163:  What is the number of countries with more than 2 car makers ? ||| car_1
-SQL:  select count(*) from ( select t1.countryid ,  count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2 );
+SQL:  select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2
 
 Question 164:  How many cars has over 6 cylinders ? ||| car_1
 SQL:  select count(*) from cars_data where cylinders  >  6;
@@ -502,14 +502,14 @@ SQL:  select t1.model from car_names as t1 join cars_data as t2 on t1.makeid  = 
 Question 168:  Among the cars with more than lowest horsepower , which ones do not have more than 3 cylinders ? List the car makeid and make name . ||| car_1
 SQL:  select t2.makeid ,  t2.make from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.horsepower  >  (select min(horsepower) from cars_data) and t1.cylinders  <=  3;
 
-Question 169:  Among the cars that do not have the minimum horsepower , what are the make ids and names of al those with less than 4 cylinders ? ||| car_1
-SQL:  select t2.makeid ,  t2.make from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.horsepower  >  (select min(horsepower) from cars_data) and t1.cylinders  <=  3;
+Question 169:  Among the cars that do not have the minimum horsepower , what are the make ids and names of all those with less than 4 cylinders ? ||| car_1
+SQL:  select t2.makeid ,  t2.make from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.horsepower  >  (select min(horsepower) from cars_data) and t1.cylinders  <  4;
 
 Question 170:  What is the maximum miles per gallon of the car with 8 cylinders or produced before 1980 ? ||| car_1
-SQL:  select mpg from cars_data where cylinders  =  8 or year  <  1980 order by mpg desc limit 1;
+SQL:  select max(mpg) from cars_data where cylinders  =  8 or year  <  1980
 
 Question 171:  What is the maximum mpg of the cars that had 8 cylinders or that were produced before 1980 ? ||| car_1
-SQL:  select mpg from cars_data where cylinders  =  8 or year  <  1980 order by mpg desc limit 1;
+SQL:  select max(mpg) from cars_data where cylinders  =  8 or year  <  1980
 
 Question 172:  Which models are lighter than 3500 but not built by the 'Ford Motor Company ' ? ||| car_1
 SQL:  select distinct t1.model from model_list as t1 join car_names as t2 on t1.model  =  t2.model join cars_data as t3 on t2.makeid  =  t3.id join car_makers as t4 on t1.maker  =  t4.id where t3.weight  <  3500 and t4.fullname != 'ford motor company';
@@ -523,7 +523,7 @@ SQL:  select countryname from countries except select t1.countryname from countr
 Question 175:  What are the names of the countries with no car makers ? ||| car_1
 SQL:  select countryname from countries except select t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country;
 
-Question 176:  Which are the car makers which produce at least 2 models and more than 3 car makes ? List the id and the maker . ||| car_1
+Question 176:  Which are the car makers which produce at least 2 models and more than 3 car makers ? List the id and the maker . ||| car_1
 SQL:  select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker group by t1.id having count(*)  >=  2 intersect select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model group by t1.id having count(*)  >  3;
 
 Question 177:  What are the ids and makers of all car makers that produce at least 2 models and make more than 3 cars ? ||| car_1
@@ -532,7 +532,7 @@ SQL:  select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1
 Question 178:  What are the id and names of the countries which have more than 3 car makers or produce the 'fiat ' model ? ||| car_1
 SQL:  select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';
 
-Question 179:  What are the ids and names of all countries that either have more than 3 car makers or produce fiats ? ||| car_1
+Question 179:  What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ? ||| car_1
 SQL:  select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';
 
 Question 180:  Which country does Airline `` JetBlue Airways '' belong to ? ||| flight_2
@@ -1082,10 +1082,10 @@ Question 361:  Count the number of paragraphs in the document named 'Summer Show
 SQL:  select count(*) from paragraphs as t1 join documents as t2 on t1.document_id  =  t2.document_id where t2.document_name  =  'summer show'
 
 Question 362:  Show paragraph details for paragraph with text 'Korea ' . ||| cre_Doc_Template_Mgt
-SQL:  select other_details from paragraphs where paragraph_text  =  'korea'
+SQL:  select other_details from paragraphs where paragraph_text like 'korea'
 
 Question 363:  What are the details for the paragraph that includes the text 'Korea ' ? ||| cre_Doc_Template_Mgt
-SQL:  select other_details from paragraphs where paragraph_text  =  'korea'
+SQL:  select other_details from paragraphs where paragraph_text like 'korea'
 
 Question 364:  Show all paragraph ids and texts for the document with name 'Welcome to NY ' . ||| cre_Doc_Template_Mgt
 SQL:  select t1.paragraph_id ,   t1.paragraph_text from paragraphs as t1 join documents as t2 on t1.document_id  =  t2.document_id where t2.document_name  =  'welcome to ny'
@@ -1160,10 +1160,10 @@ Question 387:  What is the age and hometown of every teacher ? ||| course_teach
 SQL:  select age ,  hometown from teacher
 
 Question 388:  List the name of teachers whose hometown is not `` Little Lever Urban District '' . ||| course_teach
-SQL:  select name from teacher where hometown != "little lever urban distric"
+SQL:  select name from teacher where hometown != "little lever urban district"
 
 Question 389:  What are the names of the teachers whose hometown is not `` Little Lever Urban District '' ? ||| course_teach
-SQL:  select name from teacher where hometown != "little lever urban distric"
+SQL:  select name from teacher where hometown != "little lever urban district"
 
 Question 390:  Show the name of teachers aged either 32 or 33 ? ||| course_teach
 SQL:  select name from teacher where age  =  32 or age  =  33
@@ -1546,7 +1546,7 @@ SQL:  select zip_postcode from addresses where city  =  'port chelsea'
 Question 516:  Which department offers the most number of degrees ? List department name and id . ||| student_transcripts_tracking
 SQL:  select t2.department_name ,  t1.department_id from degree_programs as t1 join departments as t2 on t1.department_id  =  t2.department_id group by t1.department_id order by count(*) desc limit 1
 
-Question 517:  For each department id , what is the name of the department with the most number of degrees ? ||| student_transcripts_tracking
+Question 517:  What is the name and id of the department with the most number of degrees ? ||| student_transcripts_tracking
 SQL:  select t2.department_name ,  t1.department_id from degree_programs as t1 join departments as t2 on t1.department_id  =  t2.department_id group by t1.department_id order by count(*) desc limit 1
 
 Question 518:  How many departments offer any degree ? ||| student_transcripts_tracking
@@ -1660,7 +1660,7 @@ SQL:  select t2.transcript_date ,  t1.transcript_id from transcript_contents as 
 Question 554:  What is the phone number of the man with the first name Timmothy and the last name Ward ? ||| student_transcripts_tracking
 SQL:  select cell_mobile_number from students where first_name  =  'timmothy' and last_name  =  'ward'
 
-Question 555:  What is the mobile phone number of the student named Timothy Ward ? ||| student_transcripts_tracking
+Question 555:  What is the mobile phone number of the student named Timmothy Ward ? ||| student_transcripts_tracking
 SQL:  select cell_mobile_number from students where first_name  =  'timmothy' and last_name  =  'ward'
 
 Question 556:  Who is the first student to register ? List the first name , middle name and last name . ||| student_transcripts_tracking
@@ -1748,10 +1748,10 @@ Question 583:  What is the description for the section named h ? ||| student_tra
 SQL:  select section_description from sections where section_name  =  'h'
 
 Question 584:  Find the first name of the students who permanently live in the country Haiti or have the cell phone number 09700166582 . ||| student_transcripts_tracking
-SQL:  select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' union select first_name from students where cell_mobile_number  =  '09700166582'
+SQL:  select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' or t1.cell_mobile_number  =  '09700166582'
 
 Question 585:  What are the first names of the students who live in Haiti permanently or have the cell phone number 09700166582 ? ||| student_transcripts_tracking
-SQL:  select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' union select first_name from students where cell_mobile_number  =  '09700166582'
+SQL:  select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' or t1.cell_mobile_number  =  '09700166582'
 
 Question 586:  List the title of all cartoons in alphabetical order . ||| tvshow
 SQL:  select title from cartoon order by title
@@ -1886,10 +1886,10 @@ Question 629:  How many cartoons did each director create ? ||| tvshow
 SQL:  select count(*) ,  directed_by from cartoon group by directed_by
 
 Question 630:  Find the production code and channel of the most recently aired cartoon . ||| tvshow
-SQL:  select production_code ,  channel from cartoon order by original_air_date limit 1
+SQL:  select production_code ,  channel from cartoon order by original_air_date desc limit 1
 
 Question 631:  What is the produdction code and channel of the most recent cartoon ? ||| tvshow
-SQL:  select production_code ,  channel from cartoon order by original_air_date limit 1
+SQL:  select production_code ,  channel from cartoon order by original_air_date desc limit 1
 
 Question 632:  Find the package choice and series name of the TV channel that has high definition TV . ||| tvshow
 SQL:  select package_option ,  series_name from tv_channel where hight_definition_tv  =  "yes"
@@ -2101,7 +2101,7 @@ SQL:  select t2.created ,  t2.state ,  t2.phone_number from contestants as t1 jo
 Question 701:  List the area codes in which voters voted both for the contestant 'Tabatha Gehling ' and the contestant 'Kelly Clauss ' . ||| voter_1
 SQL:  select t3.area_code from contestants as t1 join votes as t2 on t1.contestant_number  =  t2.contestant_number join area_code_state as t3 on t2.state  =  t3.state where t1.contestant_name  =  'tabatha gehling' intersect select t3.area_code from contestants as t1 join votes as t2 on t1.contestant_number  =  t2.contestant_number join area_code_state as t3 on t2.state  =  t3.state where t1.contestant_name  =  'kelly clauss'
 
-Question 702:  Return the names the contestants whose names contain the substring 'Al ' . ||| voter_1
+Question 702:  Return the names of the contestants whose names contain the substring 'Al' . ||| voter_1
 SQL:  select contestant_name from contestants where contestant_name like "%al%"
 
 Question 703:  What are the names of all the countries that became independent after 1950 ? ||| world_1
@@ -2261,7 +2261,7 @@ Question 754:  Which regions speak Dutch or English ? ||| world_1
 SQL:  select distinct t1.region from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "english" or t2.language  =  "dutch"
 
 Question 755:  What are the countries where either English or Dutch is the official language ? ||| world_1
-SQL:  select * from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "english" and isofficial  =  "t" union select * from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "dutch" and isofficial  =  "t"
+SQL:  select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "english" and isofficial  =  "t" union select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "dutch" and isofficial  =  "t"
 
 Question 756:  Which countries have either English or Dutch as an official language ? ||| world_1
 SQL:  select * from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "english" and isofficial  =  "t" union select * from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "dutch" and isofficial  =  "t"
@@ -2356,7 +2356,7 @@ SQL:  select distinct t2.name from country as t1 join city as t2 on t2.countryco
 Question 786:  What are the names of cities in Europe for which English is not the official language ? ||| world_1
 SQL:  select distinct t2.name from country as t1 join city as t2 on t2.countrycode  =  t1.code where t1.continent  =  'europe' and t1.name not in (select t3.name from country as t3 join countrylanguage as t4 on t3.code  =  t4.countrycode where t4.isofficial  =  't' and t4.language  =  'english')
 
-Question 787:  Whic`h unique cities are in Asian countries where Chinese is the official language ? ||| world_1
+Question 787:  Which unique cities are in Asian countries where Chinese is the official language ? ||| world_1
 SQL:  select distinct t3.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode join city as t3 on t1.code  =  t3.countrycode where t2.isofficial  =  't' and t2.language  =  'chinese' and t1.continent  =  "asia"
 
 Question 788:  Return the different names of cities that are in Asia and for which Chinese is the official language . ||| world_1
@@ -2428,17 +2428,17 @@ SQL:  select name from country where continent  =  "europe" and population  =  "
 Question 810:  Give the names of countries that are in Europe and have a population equal to 80000 . ||| world_1
 SQL:  select name from country where continent  =  "europe" and population  =  "80000"
 
-Question 811:  What is the total population and average area of countries in the continent of North America whose area is bigger than 3000？ ||| world_1
+Question 811:  What is the total population and average area of countries in the continent of North America whose area is bigger than 3000 ? ||| world_1
 SQL:  select sum(population) ,  avg(surfacearea) from country where continent  =  "north america" and surfacearea  >  3000
 
-Question 812:  Give the total population and average surface area corresponding to countries in Noth America that have a surface area greater than 3000 . ||| world_1
+Question 812:  Give the total population and average surface area corresponding to countries in North America that have a surface area greater than 3000 . ||| world_1
 SQL:  select sum(population) ,  avg(surfacearea) from country where continent  =  "north america" and surfacearea  >  3000
 
 Question 813:  What are the cities whose population is between 160000 and 900000 ? ||| world_1
 SQL:  select name from city where population between 160000 and 900000
 
 Question 814:  Return the names of cities that have a population between 160000 and 900000 . ||| world_1
-SQL:  select name from city where population between 160000 and 90000
+SQL:  select name from city where population between 160000 and 900000
 
 Question 815:  Which language is spoken by the largest number of countries ? ||| world_1
 SQL:  select language from countrylanguage group by language order by count(*) desc limit 1
@@ -2771,10 +2771,10 @@ Question 924:  Find the id , last name and cell phone of the professionals who l
 SQL:  select professional_id ,  last_name ,  cell_number from professionals where state  =  'indiana' union select t1.professional_id ,  t1.last_name ,  t1.cell_number from professionals as t1 join treatments as t2 on t1.professional_id  =  t2.professional_id group by t1.professional_id having count(*)  >  2
 
 Question 925:  Which dogs have not cost their owner more than 1000 for treatment ? List the dog names . ||| dog_kennels
-SQL:  select name from dogs where dog_id not in( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+SQL:  select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
 
-Question 926:  What are the names of the dogs for which the owner spent more than 1000 for treatment ? ||| dog_kennels
-SQL:  select name from dogs where dog_id not in( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+Question 926:  What are the names of the dogs for which the owner has not spend more than 1000 for treatment ? ||| dog_kennels
+SQL:  select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
 
 Question 927:  Which first names are used for professionals or owners but are not used as dog names ? ||| dog_kennels
 SQL:  select first_name from professionals union select first_name from owners except select name from dogs
@@ -2935,7 +2935,7 @@ SQL:  select cost_of_treatment from treatments order by date_of_treatment desc l
 Question 979:  How many dogs have not gone through any treatment ? ||| dog_kennels
 SQL:  select count(*) from dogs where dog_id not in ( select dog_id from treatments )
 
-Question 980:  Tell me the number of dogs that have received any treatment . ||| dog_kennels
+Question 980:  Tell me the number of dogs that have not received any treatment . ||| dog_kennels
 SQL:  select count(*) from dogs where dog_id not in ( select dog_id from treatments )
 
 Question 981:  How many owners temporarily do not have any dogs ? ||| dog_kennels
@@ -3043,7 +3043,7 @@ SQL:  select citizenship ,  count(*) from singer group by citizenship
 Question 1015:  Please show the most common citizenship of singers . ||| singer
 SQL:  select citizenship from singer group by citizenship order by count(*) desc limit 1
 
-Question 1016:  What is the msot common singer citizenship ? ||| singer
+Question 1016:  What is the most common singer citizenship ? ||| singer
 SQL:  select citizenship from singer group by citizenship order by count(*) desc limit 1
 
 Question 1017:  Show different citizenships and the maximum net worth of singers of each citizenship . ||| singer

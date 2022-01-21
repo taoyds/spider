@@ -18,13 +18,13 @@ Spider is a large human-labeled dataset for complex and cross-domain semantic pa
 The dataset is annotated by 11 college students. When you use the Spider dataset, we would appreciate it if you cite the following:
 
 ```
-@inproceedings{Yu&al.18c,
+@inproceedings{Yu18c,
   title     = {Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task},
-  author    = {Tao Yu and Rui Zhang and Kai Yang and Michihiro Yasunaga and Dongxu Wang and Zifan Li and James Ma and Irene Li and Qingning Yao and Shanelle Roman and Zilin Zhang and Dragomir Radev}
-  booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
-  address   = "Brussels, Belgium",
-  publisher = "Association for Computational Linguistics",
-  year      = 2018
+  author    = {Tao Yu and Rui Zhang and Kai Yang and Michihiro Yasunaga and Dongxu Wang and Zifan Li and James Ma and Irene Li and Qingning Yao and Shanelle Roman and Zilin Zhang and Dragomir Radev},
+  booktitle = {"Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing"},
+  address   = {"Brussels, Belgium"},
+  publisher = {"Association for Computational Linguistics"},
+  year      = {2018}
 }
 ```
 

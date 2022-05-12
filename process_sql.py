@@ -4,10 +4,10 @@
 #   2. only table name has alias
 #   3. only one intersect/union/except
 #
-# val: number(float)/string(str)/sql(dict)
+# val: number(float)/string(str)/sql(dict)/col_unit
 # col_unit: (agg_id, col_id, isDistinct(bool))
 # val_unit: (unit_op, col_unit1, col_unit2)
-# table_unit: (table_type, col_unit/sql)
+# table_unit: (table_type, col_id/sql)
 # cond_unit: (not_op, op_id, val_unit, val1, val2)
 # condition: [cond_unit1, 'and'/'or', cond_unit2, ...]
 # sql {

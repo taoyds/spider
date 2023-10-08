@@ -47,7 +47,7 @@ Question 16:  What are the locations and names of all stations with capacity bet
 SQL:  select location ,  name from stadium where capacity between 5000 and 10000
 
 Question 17:  What is the maximum capacity and the average of all stadiums ? ||| concert_singer
-SQL:  select max(capacity), average from stadium
+SQL:  select max(capacity), avg(capacity) from stadium
 
 Question 18:  What is the average and maximum capacities for all stadiums ? ||| concert_singer
 SQL:  select avg(capacity) ,  max(capacity) from stadium
@@ -194,10 +194,10 @@ Question 65:  What are the ids of the students who do not own cats as pets ? |||
 SQL:  select stuid from student except select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat'
 
 Question 66:  Find the first name and age of students who have a dog but do not have a cat as a pet . ||| pets_1
-SQL:  select t1.fname ,  t1.age from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog' and t1.stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat')
+SQL:  select distinct t1.fname ,  t1.age from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog' and t1.stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat')
 
 Question 67:  What is the first name of every student who has a dog but does not have a cat ? ||| pets_1
-SQL:  select t1.fname ,  t1.age from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog' and t1.stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat')
+SQL:  select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog' and t1.stuid not in (select t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat')
 
 Question 68:  Find the type and weight of the youngest pet . ||| pets_1
 SQL:  select pettype ,  weight from pets order by pet_age limit 1
@@ -299,7 +299,7 @@ Question 100:  Find the name of the makers that produced some cars in the year o
 SQL:  select distinct t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model join cars_data as t4 on t3.makeid  =  t4.id where t4.year  =  '1970';
 
 Question 101:  What is the name of the different car makers who produced a car in 1970 ? ||| car_1
-SQL:  select distinct t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model join cars_data as t4 on t3.makeid  =  t4.id where t4.year  =  '1970';
+SQL:  select distinct t1.fullname from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model join cars_data as t4 on t3.makeid  =  t4.id where t4.year  =  '1970';
 
 Question 102:  Find the make and production time of the cars that were produced in the earliest year ? ||| car_1
 SQL:  select t2.make ,  t1.year from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.year  =  (select min(year) from cars_data);
